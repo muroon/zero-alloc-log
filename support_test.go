@@ -15,4 +15,4 @@ func (s *blackholeStream) Write(p []byte) (int, error) {
 	return len(p), nil
 }
 
-func doneFunc(msg string) {}
+func doneFunc(b []byte) {}
