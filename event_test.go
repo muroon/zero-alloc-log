@@ -3,7 +3,7 @@ package zero_alloc_log
 import "testing"
 
 func TestNewEventNormal(t *testing.T) {
-	stream := &blackholeStream{}
+	stream := &testStream{}
 	LogWriter = stream
 	LogMode = ModeNormal
 	Info("test")
@@ -11,7 +11,7 @@ func TestNewEventNormal(t *testing.T) {
 }
 
 func BenchmarkEventNormal(b *testing.B) {
-	stream := &blackholeStream{}
+	stream := &testStream{}
 	LogWriter = stream
 	LogMode = ModeNormal
 	b.ReportAllocs()
@@ -29,7 +29,7 @@ func BenchmarkEventNormal(b *testing.B) {
 }
 
 func BenchmarkEventZeroAllocation(b *testing.B) {
-	stream := &blackholeStream{}
+	stream := &testStream{}
 	LogWriter = stream
 	LogMode = ModeZeroAllocation
 	b.ReportAllocs()
@@ -47,7 +47,7 @@ func BenchmarkEventZeroAllocation(b *testing.B) {
 }
 
 func BenchmarkEventWithDoneZeroAllocation(b *testing.B) {
-	stream := &blackholeStream{}
+	stream := &testStream{}
 	LogWriter = stream
 	LogMode = ModeZeroAllocation
 	b.ReportAllocs()

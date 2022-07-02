@@ -31,6 +31,7 @@ func putEventInterface(e eventInterface) {
 	eventPool.Put(e)
 }
 
+// InfoByInterface is the func for bench test of using interface.
 func InfoByInterface(msg string) {
 	e := newEventInterface([]byte(msg), InfoLevel, nil)
 	e.write()

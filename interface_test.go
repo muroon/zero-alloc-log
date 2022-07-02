@@ -3,7 +3,7 @@ package zero_alloc_log
 import "testing"
 
 func BenchmarkEventWithInterfaceZeroAllocation(b *testing.B) {
-	stream := &blackholeStream{}
+	stream := &testStream{}
 	LogWriter = stream
 	LogMode = ModeZeroAllocation
 	b.ReportAllocs()

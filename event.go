@@ -6,7 +6,7 @@ import (
 	"sync"
 )
 
-var LogWriter io.Writer // ログの出力(使用時に外部から指定可能)
+var LogWriter io.Writer
 var LogMode Mode
 
 type Level int8
@@ -36,9 +36,9 @@ const (
 
 // event
 type event struct {
-	buf   []byte         // ログmsgなど出力内容
-	level Level          // ログLevel
-	done  func(b []byte) // ログ出力用完了channel (Panic, Fatal用)
+	buf   []byte         // log message
+	level Level          // log level
+	done  func(b []byte) // after writing (for Panic, Fatal)
 }
 
 func (e event) write() {
@@ -84,42 +84,49 @@ func putEvent(e *event) {
 	eventPool.Put(e)
 }
 
+// Debug writes Debug level log.
 func Debug(msg string) {
 	e := newEvent([]byte(msg), DebugLevel, nil)
 	e.write()
 	putEvent(e)
 }
 
+// Info writes Info level log.
 func Info(msg string) {
 	e := newEvent([]byte(msg), InfoLevel, nil)
 	e.write()
 	putEvent(e)
 }
 
+// Warn writes Warn level log.
 func Warn(msg string) {
 	e := newEvent([]byte(msg), WarnLevel, nil)
 	e.write()
 	putEvent(e)
 }
 
+// Error writes Error level log.
 func Error(err error) {
 	e := newEvent([]byte(err.Error()), ErrorLevel, nil)
 	e.write()
 	putEvent(e)
 }
 
+// Fatal writes Fatal level log.
 func Fatal(err error) {
 	e := newEvent([]byte(err.Error()), FatalLevel, func(b []byte) { os.Exit(1) })
 	e.write()
 	putEvent(e)
 }
 
+// Panic writes Panic level log.
 func Panic(err error) {
 	e := newEvent([]byte(err.Error()), PanicLevel, func(b []byte) { panic(b) })
 	e.write()
 	putEvent(e)
 }
 
+// DoneDebug is the func for bench test of using channel.
 func DoneDebug(msg string, done func(b []byte)) {
 	e := newEvent([]byte(msg), DebugLevel, done)
 	e.write()
