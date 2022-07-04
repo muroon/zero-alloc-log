@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  golang:
+    image: golang:1.18-alpine
+    tty: true
+    volumes:
+      - ./:/go/src/github.com/muroon/zero-alloc-log
+    environment:
+      - "GOPATH=/go"
