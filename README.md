@@ -2,6 +2,7 @@
 
 The simple zero allocation Logger in golang.
 This is a sample for studying why the logger like [zerolog](https://github.com/rs/zerolog) or [zap](https://github.com/uber-go/zap) can be zero allocation.
+See documentation with details [here](https://rsci.app.link/Qawx117Z9rb?_p=c51429c399007af1e11b90fceeb3)
 
 Thease results are under Go 1.17.
 
